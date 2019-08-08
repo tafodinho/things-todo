@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "watch": "webpack --progress --watch"
+    "watch": "webpack --progress --watch --developement; node-sass — watch assets/scss -o assets/css",
+    "scss": "node-sass --watch assets/scss -o assets/css"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   },
   "homepage": "https://github.com/tafodinho/things-todo#readme",
   "dependencies": {
+    "node-sass": "^4.12.0",
+    "sass": "^1.22.9",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
   }
