@@ -39,10 +39,10 @@ document.getElementById("create-project").addEventListener("click", () => {
 
 })
 
+
 document.getElementById("create-task").addEventListener("click", () => {
     const title = document.getElementById("todo-title").value
     const description = document.getElementById("todo-description").value
-    console.log(description);
     const priority = document.getElementById("todo-priority").value
     const [project, projectIndex] = document.getElementById("project-options").value.split("-")
     const todo = new Todo(title, description, priority, project)
@@ -72,7 +72,8 @@ const renderProjects = () => {
             view += ` 
                 <a hfref="" class="clearfix" id="project"> 
                     <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
-                    <h6 class="flaot-left">${value.name}</h6>
+                    <h6 class="float-left">${value.name}</h6>
+                   <img class="float-right" id ="deletes" src="../assets/images/icons/bin.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
                 </a>
             
             `
