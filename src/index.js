@@ -3,7 +3,11 @@ import Todo from './todo'
 
 
 const projects = []
-
+window.onload = ()=>{
+    renderProjects()
+    renderProjectOptions()
+     renderTodos()
+};
 
 if(document.getElementById("project") !== null) {
     document.getElementsByClassName("project-items")[0].style.display = "none"
@@ -21,6 +25,7 @@ document.getElementById("create-project").addEventListener("click", () => {
     const projectName = document.getElementById("project-name").value
     const project = new Project(projectName)
     projects.push(project)
+    window.localStorage.setItem("projects",JSON.stringify(projects))
     renderProjects()
     renderProjectOptions()
     console.log(projects)
@@ -48,7 +53,8 @@ const renderProjectOptions = () => {
 }
 const renderProjects = () => {
     let view = ``
-    projects.forEach((value, index) => {
+    console.log(JSON.parse(window.localStorage.getItem('projects')))
+    JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
         view += ` 
             <a hfref="" class="clearfix" id="project"> 
                 <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
