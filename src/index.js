@@ -54,10 +54,7 @@ const renderProjects = () => {
                 <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
                 <h6 class="flaot-left">${value.name}</h6>
             </a>
-            <ul class="project-items-${index}">
-                <li>zumbi 1</li>
-                <li>zumbi 2</li>
-            </ul>
+        
         `
     })
     document.getElementById("project-list").innerHTML = view
