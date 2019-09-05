@@ -2,9 +2,14 @@ import Project from './project'
 import Todo from './todo'
 
 
-const projects = []
+let projects = []
 window.onload = ()=>{
-    renderProjects()
+    if(window.localStorage.getItem('projects')!= null){
+        projects = JSON.parse(window.localStorage.getItem('projects'))
+        renderProjects()
+        renderProjectOptions()
+        renderTodos()
+    }
 };
 
 if(document.getElementById("project") !== null) {
@@ -37,12 +42,14 @@ document.getElementById("create-project").addEventListener("click", () => {
 document.getElementById("create-task").addEventListener("click", () => {
     const title = document.getElementById("todo-title").value
     const description = document.getElementById("todo-description").value
+    console.log(description);
     const priority = document.getElementById("todo-priority").value
     const [project, projectIndex] = document.getElementById("project-options").value.split("-")
     const todo = new Todo(title, description, priority, project)
     projects[projectIndex].todos.push(todo)
+    window.localStorage.clear();
+    window.localStorage.setItem("projects",JSON.stringify(projects))
     renderTodos()
-    console.log(projects[projectIndex])
 })
 
 const renderProjectOptions = () => {
@@ -54,6 +61,8 @@ const renderProjectOptions = () => {
             `
         })
         document.getElementById("project-options").innerHTML = projectOpionView
+    }else{
+        document.getElementById("create-task").setAttribute("disabled","true")
     }
 }
 const renderProjects = () => {
@@ -76,6 +85,7 @@ const renderTodos = () => {
     let view = ``
     projects.forEach((value, index) => {
         value.todos.forEach((value1, index1) => {
+            console.log(value1);
             view += `
                 <div class="todo-item">
                     <div class="clearfix todo-item-header">
