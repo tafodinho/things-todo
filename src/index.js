@@ -5,8 +5,6 @@ import Todo from './todo'
 const projects = []
 window.onload = ()=>{
     renderProjects()
-    renderProjectOptions()
-     renderTodos()
 };
 
 if(document.getElementById("project") !== null) {
@@ -23,12 +21,17 @@ if(document.getElementById("project") !== null) {
 
 document.getElementById("create-project").addEventListener("click", () => {
     const projectName = document.getElementById("project-name").value
-    const project = new Project(projectName)
-    projects.push(project)
-    window.localStorage.setItem("projects",JSON.stringify(projects))
-    renderProjects()
-    renderProjectOptions()
-    console.log(projects)
+    let project = null;
+    if (projectName.length >= 1){
+         project = new Project(projectName)
+         projects.push(project)
+         window.localStorage.setItem("projects",JSON.stringify(projects))
+         renderProjects()
+         renderProjectOptions()
+    }else{
+        alert("Project name is required");
+    }
+
 })
 
 document.getElementById("create-task").addEventListener("click", () => {
@@ -44,26 +47,29 @@ document.getElementById("create-task").addEventListener("click", () => {
 
 const renderProjectOptions = () => {
     let projectOpionView = ``
-    projects.forEach((value, index) => {
-        projectOpionView += `
-            <option value="${value.name+'-'+index}" id="${index}">${value.name}</option>
-        `
-    })
-    document.getElementById("project-options").innerHTML = projectOpionView
+    if(window.localStorage.getItem('projects')!= null){
+        JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
+            projectOpionView += `
+                <option value="${value.name+'-'+index}" id="${index}">${value.name}</option>
+            `
+        })
+        document.getElementById("project-options").innerHTML = projectOpionView
+    }
 }
 const renderProjects = () => {
     let view = ``
-    console.log(JSON.parse(window.localStorage.getItem('projects')))
-    JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
-        view += ` 
-            <a hfref="" class="clearfix" id="project"> 
-                <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
-                <h6 class="flaot-left">${value.name}</h6>
-            </a>
-        
-        `
-    })
-    document.getElementById("project-list").innerHTML = view
+    if(window.localStorage.getItem('projects') != null){
+        JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
+            view += ` 
+                <a hfref="" class="clearfix" id="project"> 
+                    <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
+                    <h6 class="flaot-left">${value.name}</h6>
+                </a>
+            
+            `
+        })
+        document.getElementById("project-list").innerHTML = view
+    }
 }
 
 const renderTodos = () => {
