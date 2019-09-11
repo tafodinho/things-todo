@@ -2,8 +2,15 @@ import Project from './project'
 import Todo from './todo'
 
 
-const projects = []
-
+let projects = []
+window.onload = ()=>{
+    if(window.localStorage.getItem('projects')!= null){
+        projects = JSON.parse(window.localStorage.getItem('projects'))
+        renderProjects()
+        renderProjectOptions()
+        renderTodos()
+    }
+};
 
 if(document.getElementById("project") !== null) {
     document.getElementsByClassName("project-items")[0].style.display = "none"
@@ -19,12 +26,19 @@ if(document.getElementById("project") !== null) {
 
 document.getElementById("create-project").addEventListener("click", () => {
     const projectName = document.getElementById("project-name").value
-    const project = new Project(projectName)
-    projects.push(project)
-    renderProjects()
-    renderProjectOptions()
-    console.log(projects)
+    let project = null;
+    if (projectName.length >= 1){
+         project = new Project(projectName)
+         projects.push(project)
+         window.localStorage.setItem("projects",JSON.stringify(projects))
+         renderProjects()
+         renderProjectOptions()
+    }else{
+        alert("Project name is required");
+    }
+
 })
+
 
 document.getElementById("create-task").addEventListener("click", () => {
     const title = document.getElementById("todo-title").value
@@ -33,40 +47,46 @@ document.getElementById("create-task").addEventListener("click", () => {
     const [project, projectIndex] = document.getElementById("project-options").value.split("-")
     const todo = new Todo(title, description, priority, project)
     projects[projectIndex].todos.push(todo)
+    window.localStorage.clear();
+    window.localStorage.setItem("projects",JSON.stringify(projects))
     renderTodos()
-    console.log(projects[projectIndex])
 })
 
 const renderProjectOptions = () => {
     let projectOpionView = ``
-    projects.forEach((value, index) => {
-        projectOpionView += `
-            <option value="${value.name+'-'+index}" id="${index}">${value.name}</option>
-        `
-    })
-    document.getElementById("project-options").innerHTML = projectOpionView
+    if(window.localStorage.getItem('projects')!= null){
+        JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
+            projectOpionView += `
+                <option value="${value.name+'-'+index}" id="${index}">${value.name}</option>
+            `
+        })
+        document.getElementById("project-options").innerHTML = projectOpionView
+    }else{
+        document.getElementById("create-task").setAttribute("disabled","true")
+    }
 }
 const renderProjects = () => {
     let view = ``
-    projects.forEach((value, index) => {
-        view += ` 
-            <a hfref="" class="clearfix" id="project"> 
-                <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
-                <h6 class="flaot-left">${value.name}</h6>
-            </a>
-            <ul class="project-items-${index}">
-                <li>zumbi 1</li>
-                <li>zumbi 2</li>
-            </ul>
-        `
-    })
-    document.getElementById("project-list").innerHTML = view
+    if(window.localStorage.getItem('projects') != null){
+        JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
+            view += ` 
+                <a hfref="" class="clearfix" id="project"> 
+                    <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
+                    <h6 class="float-left">${value.name}</h6>
+                   <img class="float-right" id ="deletes" src="../assets/images/icons/bin.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
+                </a>
+            
+            `
+        })
+        document.getElementById("project-list").innerHTML = view
+    }
 }
 
 const renderTodos = () => {
     let view = ``
     projects.forEach((value, index) => {
         value.todos.forEach((value1, index1) => {
+            console.log(value1);
             view += `
                 <div class="todo-item">
                     <div class="clearfix todo-item-header">
