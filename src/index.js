@@ -46,10 +46,15 @@ document.getElementById("create-task").addEventListener("click", () => {
     const priority = document.getElementById("todo-priority").value
     const [project, projectIndex] = document.getElementById("project-options").value.split("-")
     const todo = new Todo(title, description, priority, project)
-    projects[projectIndex].todos.push(todo)
-    window.localStorage.clear();
-    window.localStorage.setItem("projects",JSON.stringify(projects))
-    renderTodos()
+    if (title.length>=1){
+        projects[projectIndex].todos.push(todo)
+        window.localStorage.clear();
+        window.localStorage.setItem("projects",JSON.stringify(projects))
+        renderTodos()
+    }else{
+        alert("Task Title is required");
+    }
+   
 })
 
 const renderProjectOptions = () => {
