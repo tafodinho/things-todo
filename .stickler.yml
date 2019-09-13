@@ -1,9 +1,0 @@
-linters:
-    flake8:
-    eslint:
-        config: './.eslintrc.json'
-    csslint:
-
-files:
-    ignore:
-        - './dist/*'
