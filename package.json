@@ -1,0 +1,33 @@
+{
+  "name": "things-todo",
+  "version": "1.0.0",
+  "description": "An application to manage your todo list by grouping them in projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --progress --watch --developement; node-sass — watch assets/scss -o assets/css",
+    "scss": "node-sass --watch assets/scss -o assets/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tafodinho/things-todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tafodinho/things-todo/issues"
+  },
+  "homepage": "https://github.com/tafodinho/things-todo#readme",
+  "dependencies": {
+    "node-sass": "^4.12.0",
+    "sass": "^1.22.9",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
+  },
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
