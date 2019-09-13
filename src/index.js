@@ -9,7 +9,6 @@ window.onload = () => {
     projects = JSON.parse(window.localStorage.getItem('projects'));
     renderProjects();
     renderProjectOptions();
-    renderTodos();
   }
 };
 
@@ -24,7 +23,27 @@ if (document.getElementById('project') !== null) {
   });
 }
 
-
+document.getElementById('project-list').addEventListener('click', (e) => {
+  if (e.target.id.split('-').length === 1) {
+    console.log('project');
+  } else if (e.target.id.split('-').length === 2) {
+    const projectId = e.target.id.split('-')[0];
+    const todoId = e.target.id.split('-')[1];
+    let todoItem = null;
+    projects.forEach((project) => {
+      if (project.id === projectId) {
+        project.todos.forEach((todo) => {
+          if (todo.id === todoId) {
+            todoItem = todo;
+            return;
+          }
+        });
+        return;
+      }
+    });
+    renderTodo(todoItem);
+  }
+});
 document.getElementById('create-project').addEventListener('click', () => {
   const projectName = document.getElementById('project-name').value;
   let project = null;
@@ -46,10 +65,14 @@ document.getElementById('create-task').addEventListener('click', () => {
   const priority = document.getElementById('todo-priority').value;
   const [project, projectIndex] = document.getElementById('project-options').value.split('-');
   const todo = new Todo(title, description, priority, project);
-  projects[projectIndex].todos.push(todo);
-  window.localStorage.clear();
-  window.localStorage.setItem('projects', JSON.stringify(projects));
-  renderTodos();
+  if (title.length >= 1) {
+    projects[projectIndex].todos.push(todo);
+    window.localStorage.clear();
+    window.localStorage.setItem('projects', JSON.stringify(projects));
+    renderTodos();
+  } else {
+    alert('Task Title is required');
+  }
 });
 
 const renderProjectOptions = () => {
@@ -65,6 +88,7 @@ const renderProjectOptions = () => {
     document.getElementById('create-task').setAttribute('disabled', 'true');
   }
 };
+
 const renderProjects = () => {
   let view = '';
   if (window.localStorage.getItem('projects') != null) {
@@ -75,17 +99,45 @@ const renderProjects = () => {
                     <h6 class="float-left">${value.name}</h6>
                    <img class="float-right" id ="deletes" src="../assets/images/icons/bin.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
                 </a>
-            
+                <ul class="project-items">
+                    ${renderTodoTitles(value)}
+                </ul>
             `;
     });
     document.getElementById('project-list').innerHTML = view;
   }
 };
 
+const renderTodoTitles = (project) => {
+  let titleList = '';
+  project.todos.forEach((todo) => {
+    titleList += `<li id="${project.id}-${todo.id}">${todo.title}<img class="float-right" id ="${todo.id}" src="../assets/images/icons/bin.svg" height="20px" width="30px" /></li>`;
+  });
+  return titleList;
+};
+
+const deleteTodo = (todoId, projectId) => {
+  let deleteIndex = null;
+  projects.forEach((project) => {
+    if (project.id === projectId) {
+      project.todos.forEach((todo, index) => {
+        if (todo.id === todoId) {
+          deleteIndex = index;
+          return;
+        }
+      });
+      project.todos.splice(deleteIndex);
+      return;
+    }
+  });
+  console.log("deleted")
+  // renderProjects();
+}
+
 const renderTodos = () => {
   let view = '';
-  projects.forEach(value => {
-    value.todos.forEach(value1 => {
+  projects.forEach((value) => {
+    value.todos.forEach((value1) => {
       console.log(value1);
       view += `
                 <div class="todo-item">
@@ -104,6 +156,25 @@ const renderTodos = () => {
             `;
     });
   });
+  document.getElementById('todo-items').innerHTML = view;
+};
+const renderTodo = (todo) => {
+  let view = '';
+  view = `
+      <div class="todo-item">
+          <div class="clearfix todo-item-header">
+              <input class="float-left" type="checkbox">
+              <h6 class="float-left">${todo.title}</h6>
+          </div>
+          <p>
+              ${todo.description}
+          </p>
+          <div class="clearfix todo-item-footer">
+              <h6 class="float-left">Project: </h6>
+              <span cclass="float-left">${todo.name}</span>
+          </div>
+      </div>
+  `;
   document.getElementById('todo-items').innerHTML = view;
 };
 
