@@ -54,8 +54,6 @@ document.getElementById('project-list').addEventListener('click', (e) => {
       window.localStorage.clear();
       window.localStorage.setItem('projects', JSON.stringify(projects));
       renderProjects();
-    } else if (value === 'edit') {
-
     }
   }
 });
@@ -157,9 +155,6 @@ const deleteTodo = (todoId, projectId) => {
   });
 };
 
-const editTodo = () => {
-
-};
 
 // const renderTodos = () => {
 //   let view = '';
