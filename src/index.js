@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 /* eslint-disable no-use-before-define */
 import Project from './project';
 import Todo from './todo';
@@ -25,7 +26,7 @@ if (document.getElementById('project') !== null) {
 
 document.getElementById('project-list').addEventListener('click', (e) => {
   if (e.target.id.split('-').length === 1) {
-    console.log('project');
+    // console.log('project');
   } else if (e.target.id.split('-').length === 2) {
     const projectId = e.target.id.split('-')[0];
     const todoId = e.target.id.split('-')[1];
@@ -53,6 +54,8 @@ document.getElementById('project-list').addEventListener('click', (e) => {
       window.localStorage.clear();
       window.localStorage.setItem('projects', JSON.stringify(projects));
       renderProjects();
+    } else if (value === 'edit') {
+
     }
   }
 });
@@ -87,6 +90,8 @@ document.getElementById('create-task').addEventListener('click', () => {
   } else {
     alert('Task Title is required');
   }
+  document.getElementById('todo-title').value = '';
+  document.getElementById('todo-description').value = '';
 });
 
 const renderProjectOptions = () => {
@@ -125,7 +130,13 @@ const renderProjects = () => {
 const renderTodoTitles = (project) => {
   let titleList = '';
   project.todos.forEach((todo) => {
-    titleList += `<li class"project-todos" id="${project.id}-${todo.id}">${todo.title}<img class="float-right" id ="delete-${project.id}-${todo.id}" src="../assets/images/icons/bin.svg" height="20px" width="30px" /></li>`;
+    titleList += `<li class"project-todos" 
+                  id="${project.id}-${todo.id}">${todo.title}
+                  <img class="float-right" 
+                  id ="delete-${project.id}-${todo.id}" 
+                  src="../assets/images/icons/bin.svg" 
+                  height="20px" width="30px" />
+                  </li>`;
   });
   return titleList;
 };
@@ -144,9 +155,11 @@ const deleteTodo = (todoId, projectId) => {
       return;
     }
   });
+};
 
-  console.log(projects)
-}
+const editTodo = () => {
+
+};
 
 // const renderTodos = () => {
 //   let view = '';
