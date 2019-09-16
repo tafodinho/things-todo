@@ -155,31 +155,6 @@ const deleteTodo = (todoId, projectId) => {
   });
 };
 
-
-// const renderTodos = () => {
-//   let view = '';
-//   projects.forEach((value) => {
-//     value.todos.forEach((value1) => {
-//       console.log(value1);
-//       view += `
-//                 <div class="todo-item">
-//                     <div class="clearfix todo-item-header">
-//                         <input class="float-left" type="checkbox">
-//                         <h6 class="float-left">${value1.title}</h6>
-//                     </div>
-//                     <p>
-//                         ${value1.description}
-//                     </p>
-//                     <div class="clearfix todo-item-footer">
-//                         <h6 class="float-left">Project: </h6>
-//                         <span cclass="float-left">${value.name}</span>
-//                     </div>
-//                 </div>
-//             `;
-//     });
-//   });
-//   document.getElementById('todo-items').innerHTML = view;
-// };
 const renderTodo = (todo, projectName) => {
   let view = '';
   view = `
@@ -203,9 +178,3 @@ const renderTodo = (todo, projectName) => {
   `;
   document.getElementById('todo-items').innerHTML = view;
 };
-
-
-// setInterval(() => {
-//     document.getElementById("project-list").innerHTML = renderProjects()
-//     console.log(renderProjects())
-// }, 1000);
