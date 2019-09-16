@@ -127,7 +127,7 @@ const renderProjects = () => {
 
 const renderTodoTitles = (project) => {
   let titleList = '';
-  project.todos.forEach(({id, title}) => {
+  project.todos.forEach(({ id, title }) => {
     titleList += `<li class"project-todos" 
                   id="${project.id}-${id}">${title}
                   <img class="float-right" 
