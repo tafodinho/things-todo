@@ -54,6 +54,10 @@ document.getElementById('project-list').addEventListener('click', (e) => {
       window.localStorage.clear();
       window.localStorage.setItem('projects', JSON.stringify(projects));
       renderProjects();
+    } else if (value === 'edit') {
+      const projectId = e.target.id.split('-')[1];
+      const todoId = e.target.id.split('-')[2];
+      editTodo(todoId, projectId);
     }
   }
 });
@@ -73,6 +77,14 @@ document.getElementById('create-project').addEventListener('click', () => {
 
 
 document.getElementById('create-task').addEventListener('click', () => {
+  const task = document.getElementById('create-task').innerHTML;
+  if (task === 'Update') {
+    editItem();
+  } else if (task === 'Submit') {
+    createTodo();
+  }
+});
+const createTodo = () => {
   const title = document.getElementById('todo-title').value;
   const description = document.getElementById('todo-description').value;
   const priority = document.getElementById('todo-priority').value;
@@ -90,7 +102,7 @@ document.getElementById('create-task').addEventListener('click', () => {
   }
   document.getElementById('todo-title').value = '';
   document.getElementById('todo-description').value = '';
-});
+};
 
 const renderProjectOptions = () => {
   let projectOpionView = '';
@@ -134,6 +146,10 @@ const renderTodoTitles = (project) => {
                   id ="delete-${project.id}-${todo.id}" 
                   src="../assets/images/icons/bin.svg" 
                   height="20px" width="30px" />
+                  <img class="float-right" 
+                  id ="edit-${project.id}-${todo.id}" 
+                  src="../assets/images/icons/edit.svg" 
+                  height="20px" width="30px" />
                   </li>`;
   });
   return titleList;
@@ -155,7 +171,54 @@ const deleteTodo = (todoId, projectId) => {
   });
 };
 
+const editTodo = (todoId, projectId) => {
+  let todoItem = null;
+  let projectName = null;
+  let todoIndex = null;
+  let projectIndex = null;
+  projects.forEach((project, index1) => {
+    if (project.id === projectId) {
+      project.todos.forEach((todo, index2) => {
+        if (todo.id === todoId) {
+          todoItem = todo;
+          projectName = project.name;
+          todoIndex = index2;
+          projectIndex = index1;
+          return;
+        }
+      });
+      return;
+    }
+  });
+  document.getElementById('todo-title').value = todoItem.title;
+  document.getElementById('todo-description').value = todoItem.description;
+  document.getElementById('todo-priority').value = todoItem.priority;
+  document.getElementById('due-date').value = todoItem.dueDate;
+  document.getElementById('project-options').value = projectName;
+  document.getElementById('create-task').innerHTML = 'Update';
+  document.getElementById('edit-id').value = `${projectIndex}-${todoIndex}`;
+};
 
+const editItem = () => {
+  const title = document.getElementById('todo-title').value;
+  const description = document.getElementById('todo-description').value;
+  const priority = document.getElementById('todo-priority').value;
+  const dueDate = document.getElementById('due-date').value;
+  const projectName = document.getElementById('project-options').value;
+  const projectIndex = document.getElementById('edit-id').value.split('-')[0];
+  const todoIndex = document.getElementById('edit-id').value.split('-')[1];
+
+  projects[projectIndex].todos[todoIndex].title = title;
+  projects[projectIndex].todos[todoIndex].description = description;
+  projects[projectIndex].todos[todoIndex].priority = priority;
+  projects[projectIndex].todos[todoIndex].dueDate = dueDate;
+  projects[projectIndex].name = projectName;
+  window.localStorage.clear();
+  window.localStorage.setItem('projects', JSON.stringify(projects)); 
+  renderProjects();
+  document.getElementById('create-task').innerHTML = 'Submit';
+  document.getElementById('edit-id').value = '';
+};
 // const renderTodos = () => {
 //   let view = '';
 //   projects.forEach((value) => {
