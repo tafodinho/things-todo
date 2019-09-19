@@ -31,7 +31,7 @@ if (document.getElementById('project') !== null) {
 
 document.getElementById('project-list').addEventListener('click', (e) => {
   if (e.target.id.split('-').length === 1) {
-    // console.log('project');
+
   } else if (e.target.id.split('-').length === 2) {
     const projectId = e.target.id.split('-')[0];
     const todoId = e.target.id.split('-')[1];
@@ -125,7 +125,7 @@ const renderProjectOptions = () => {
 const renderProjects = () => {
   let view = '';
   if (window.localStorage.getItem('projects') != null) {
-    JSON.parse(window.localStorage.getItem('projects')).forEach((value, index) => {
+    JSON.parse(window.localStorage.getItem('projects')).forEach((value) => {
       view += ` 
                 <a hfref="" class="clearfix" id="project"> 
                     <img class="float-left" src="../assets/images/icons/plus.svg" alt="triangle with all three sides equal" height="20px" width="30px" />
@@ -223,30 +223,7 @@ const editItem = () => {
   document.getElementById('create-task').innerHTML = 'Submit';
   document.getElementById('edit-id').value = '';
 };
-// const renderTodos = () => {
-//   let view = '';
-//   projects.forEach((value) => {
-//     value.todos.forEach((value1) => {
-//       console.log(value1);
-//       view += `
-//                 <div class="todo-item">
-//                     <div class="clearfix todo-item-header">
-//                         <input class="float-left" type="checkbox">
-//                         <h6 class="float-left">${value1.title}</h6>
-//                     </div>
-//                     <p>
-//                         ${value1.description}
-//                     </p>
-//                     <div class="clearfix todo-item-footer">
-//                         <h6 class="float-left">Project: </h6>
-//                         <span cclass="float-left">${value.name}</span>
-//                     </div>
-//                 </div>
-//             `;
-//     });
-//   });
-//   document.getElementById('todo-items').innerHTML = view;
-// };
+
 const renderTodo = (todo, projectName) => {
   let view = '';
   view = `
