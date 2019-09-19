@@ -106,8 +106,6 @@ const createTodo = () => {
   } else {
     alert('Task Title is required');
   }
-  document.getElementById('todo-title').value = '';
-  document.getElementById('todo-description').value = '';
 };
 
 const renderProjectOptions = () => {
