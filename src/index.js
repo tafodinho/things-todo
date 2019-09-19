@@ -153,7 +153,7 @@ const renderTodoTitles = (project) => {
                   src="../assets/images/icons/bin.svg" 
                   height="20px" width="30px" />
                   <img class="float-right" 
-                  id ="edit-${project.id}-${todo.id}" 
+                  id ="edit-${project.id}-${id}" 
                   src="../assets/images/icons/edit.svg" 
                   height="20px" width="30px" />
                   </li>`;
