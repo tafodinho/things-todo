@@ -145,11 +145,11 @@ const renderProjects = () => {
 
 const renderTodoTitles = (project) => {
   let titleList = '';
-  project.todos.forEach((todo) => {
+  project.todos.forEach(({ id, title }) => {
     titleList += `<li class"project-todos" 
-                  id="${project.id}-${todo.id}">${todo.title}
+                  id="${project.id}-${id}">${title}
                   <img class="float-right" 
-                  id ="delete-${project.id}-${todo.id}" 
+                  id ="delete-${project.id}-${id}" 
                   src="../assets/images/icons/bin.svg" 
                   height="20px" width="30px" />
                   <img class="float-right" 
@@ -272,9 +272,3 @@ const renderTodo = (todo, projectName) => {
   `;
   document.getElementById('todo-items').innerHTML = view;
 };
-
-
-// setInterval(() => {
-//     document.getElementById("project-list").innerHTML = renderProjects()
-//     console.log(renderProjects())
-// }, 1000);
