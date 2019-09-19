@@ -5,12 +5,17 @@ import Todo from './todo';
 
 
 let projects = [];
+
 window.onload = () => {
   if (window.localStorage.getItem('projects') != null) {
     projects = JSON.parse(window.localStorage.getItem('projects'));
-    renderProjects();
-    renderProjectOptions();
+  } else {
+    const defaultProject = new Project('default');
+    projects.push(defaultProject);
+    window.localStorage.setItem('projects', JSON.stringify(projects));
   }
+  renderProjects();
+  renderProjectOptions();
 };
 
 if (document.getElementById('project') !== null) {
@@ -61,6 +66,7 @@ document.getElementById('project-list').addEventListener('click', (e) => {
     }
   }
 });
+
 document.getElementById('create-project').addEventListener('click', () => {
   const projectName = document.getElementById('project-name').value;
   let project = null;
@@ -214,7 +220,7 @@ const editItem = () => {
   projects[projectIndex].todos[todoIndex].dueDate = dueDate;
   projects[projectIndex].name = projectName;
   window.localStorage.clear();
-  window.localStorage.setItem('projects', JSON.stringify(projects)); 
+  window.localStorage.setItem('projects', JSON.stringify(projects));
   renderProjects();
   document.getElementById('create-task').innerHTML = 'Submit';
   document.getElementById('edit-id').value = '';
