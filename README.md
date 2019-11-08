@@ -5,11 +5,11 @@ Online preview: https://raw.githack.com/tafodinho/things-todo/master/dist/index.
 ## Installation Guide
 ### Requirements
 ```
-node -v >= v8.16.0
+node 
 
-npm -v >=  6.4.1
+npm 
 
-webpack -v >= 3.5.6
+webpack 
 
 ```
 ## Built With
