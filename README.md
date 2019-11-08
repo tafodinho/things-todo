@@ -17,6 +17,9 @@ webpack
  
  * Javascript
  * Webpack
+ * HTML
+ * CSS
+ * Sass
  
 ## Setup
 #### Clone project
