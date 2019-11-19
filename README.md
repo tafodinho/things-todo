@@ -1,5 +1,5 @@
 # Things Todo
-A todo list app to keep track of your activities, you can also group todos according to priotity or place them into projects.
+A todo list app to keep track of your activities. You can also group todos according to priority, or place individual todos into projects.
 
 Online preview: https://raw.githack.com/tafodinho/things-todo/master/dist/index.html
 
