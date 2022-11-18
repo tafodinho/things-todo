@@ -23,7 +23,7 @@
     "node-sass": "^4.12.0",
     "sass": "^1.22.9",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
